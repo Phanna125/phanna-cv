@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en" class="dark bg-black text-white scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PHANNA | Creative Developer</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      overflow-x: hidden;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    
+    /* Light mode styles */
+    .light {
+      --bg-primary: #ffffff;
+      --bg-secondary: #f3f4f6;
+      --text-primary: #111827;
+      --text-secondary: #4b5563;
+      --border-color: #e5e7eb;
+    }
+    
+    /* Dark mode styles */
+    .dark {
+      --bg-primary: #000000;
+      --bg-secondary: #111827;
+      --text-primary: #f3f4f6;
+      --text-secondary: #9ca3af;
+      --border-color: #374151;
+    }
+    
+    /* Cursor Glow */
+    #cursor {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.2);
+      position: fixed;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s ease-out, width 0.3s, height 0.3s;
+      z-index: 9999;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+      mix-blend-mode: difference;
+    }
+    
+    .dark #cursor {
+      background: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+    }
+    
+    #cursor.hover {
+      width: 60px;
+      height: 60px;
+      background: rgba(0, 0, 0, 0.1);
+    }
+    
+    .dark #cursor.hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Background blur balls */
+    .blur-ball {
+      position: absolute;
+      border-radius: 9999px;
+      filter: blur(100px);
+      opacity: 0.3;
+      animation: float 8s ease-in-out infinite;
+      z-index: -1;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-40px) rotate(5deg); }
+    }
+    
+    .gradient-text {
+      background: linear-gradient(90deg, #ec4899, #8b5cf6, #3b82f6);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      background-size: 300% 300%;
+      animation: gradient 8s ease infinite;
+    }
+    
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    
+    .project-card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+    
+    .light .project-card {
+      background: rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    
+    .project-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 25px -5px rgba(236, 72, 153, 0.1), 0 10px 10px -5px rgba(236, 72, 153, 0.04);
+      border-color: rgba(236, 72, 153, 0.3);
+    }
+    
+    .social-link {
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .social-link:hover {
+      transform: translateY(-3px);
+      color: #ec4899 !important;
+    }
+    
+    .section-title {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .section-title:after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 50%;
+      height: 3px;
+      background: linear-gradient(90deg, #ec4899, #8b5cf6);
+      border-radius: 3px;
+    }
+    
+    .nav-link {
+      position: relative;
+    }
+    
+    .nav-link:after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #ec4899;
+      transition: width 0.3s ease;
+    }
+    
+    .nav-link:hover:after {
+      width: 100%;
+    }
+    
+    .hero-pattern {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: radial-gradient(rgba(0, 0, 0, 0.1) 1px, transparent 1px);
+      background-size: 20px 20px;
+      z-index: -1;
+      opacity: 0.3;
+    }
+    
+    .light .hero-pattern {
+      background-image: radial-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+    }
+    
+    /* Theme toggle switch */
+    .theme-toggle {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 24px;
+    }
+    
+    .theme-toggle input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    
+    .theme-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #374151;
+      transition: .4s;
+      border-radius: 24px;
+    }
+    
+    .theme-slider:before {
+      position: absolute;
+      content: "";
+      height: 16px;
+      width: 16px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+    
+    input:checked + .theme-slider {
+      background-color: #ec4899;
+    }
+    
+    input:checked + .theme-slider:before {
+      transform: translateX(26px);
+    }
+    
+    /* Dark mode specific styles */
+    .dark nav {
+      background-color: rgba(0, 0, 0, 0.5);
+      border-bottom-color: #374151;
+    }
+    
+    .light nav {
+      background-color: rgba(255, 255, 255, 0.5);
+      border-bottom-color: #e5e7eb;
+    }
+    
+    .dark .project-card-bg {
+      background-color: rgba(30, 30, 30, 0.7);
+    }
+    
+    .light .project-card-bg {
+      background-color: rgba(243, 244, 246, 0.7);
+    }
+    
+    .dark .contact-bg {
+      background: linear-gradient(to bottom right, #111827, #1f2937);
+    }
+    
+    .light .contact-bg {
+      background: linear-gradient(to bottom right, #f3f4f6, #e5e7eb);
+    }
+  </style>
+</head>
+<body class="dark:bg-black dark:text-white bg-white text-gray-900">
+
+  <!-- Custom Cursor -->
+  <div id="cursor"></div>
+
+  <!-- Floating Background Balls -->
+  <div class="blur-ball bg-purple-500 w-72 h-72 top-10 left-10"></div>
+  <div class="blur-ball bg-pink-500 w-96 h-96 bottom-20 right-10"></div>
+  <div class="blur-ball bg-blue-500 w-64 h-64 top-1/2 left-1/4"></div>
+
+  <!-- Navigation -->
+  <nav class="fixed w-full py-6 px-8 z-50 backdrop-blur-md dark:bg-black/50 bg-white/50 dark:border-gray-800 border-gray-200">
+    <div class="max-w-6xl mx-auto flex justify-between items-center">
+      <a href="#" class="text-2xl font-bold gradient-text">PHANNA</a>
+      <div class="flex items-center gap-8">
+        <div class="hidden md:flex gap-8">
+          <a href="#about" class="nav-link dark:text-white text-gray-900">About</a>
+          <a href="#projects" class="nav-link dark:text-white text-gray-900">Projects</a>
+          <a href="#contact" class="nav-link dark:text-white text-gray-900">Contact</a>
+        </div>
+        
+        <!-- Theme toggle -->
+        <label class="theme-toggle ml-4">
+          <input type="checkbox" id="theme-toggle">
+          <span class="theme-slider"></span>
+        </label>
+        
+        <button class="md:hidden text-2xl dark:text-white text-gray-900">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="h-screen flex items-center justify-center flex-col text-center relative z-10">
+    <div class="hero-pattern"></div>
+    <div class="max-w-4xl px-6">
+      <h1 class="text-6xl md:text-8xl font-bold mb-6" data-aos="fade-down">
+        <span class="gradient-text">PHANNA</span>
+      </h1>
+      <p class="text-xl md:text-2xl dark:text-gray-400 text-gray-600 mb-8" data-aos="fade-up" data-aos-delay="300">
+        Crafting digital experiences with code & creativity
+      </p>
+      <div class="flex gap-4 justify-center" data-aos="fade-up" data-aos-delay="600">
+        <a href="#projects" class="px-6 py-3 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full font-medium hover:opacity-90 transition-opacity text-white">
+          View Work
+        </a>
+        <a href="#contact" class="px-6 py-3 border dark:border-gray-600 border-gray-300 rounded-full font-medium hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all">
+          Contact Me
+        </a>
+      </div>
+    </div>
+    
+    <div class="absolute bottom-10 left-0 right-0 flex justify-center animate-bounce">
+      <a href="#about" class="text-2xl dark:text-white text-gray-900">
+        <i class="fas fa-chevron-down"></i>
+      </a>
+    </div>
+  </section>
+
+  <!-- About Me Section -->
+  <section class="py-20 px-8 max-w-4xl mx-auto relative" id="about">
+    <div class="flex flex-col md:flex-row gap-12 items-center">
+      <div class="md:w-1/3" data-aos="fade-right">
+        <div class="bg-gradient-to-br from-pink-500 to-purple-600 p-1 rounded-full">
+          <div class="bg-white dark:bg-black rounded-full p-2">
+            <img src="https://sdmntprwestus.oaiusercontent.com/files/00000000-5d80-6230-ada5-3b5d0ab9df3b/raw?se=2025-05-26T12%3A58%3A30Z&sp=r&sv=2024-08-04&sr=b&scid=974e24c8-1f6a-5a6e-9050-c235f70fbbd9&skoid=ea1de0bc-0467-43d6-873a-9a5cf0a9f835&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-05-26T09%3A22%3A56Z&ske=2025-05-27T09%3A22%3A56Z&sks=b&skv=2024-08-04&sig=%2BOVh5Ka9YCTgna0WVakwDX7sp3RFHs/avcjkHqefnoM%3D" 
+                 alt="Phanna" 
+                 class="rounded-full w-full aspect-square object-cover">
+          </div>
+        </div>
+      </div>
+      <div class="md:w-2/3" data-aos="fade-left">
+        <h2 class="text-4xl font-bold mb-6 section-title dark:text-white text-gray-900">About Me</h2>
+        <p class="dark:text-gray-300 text-gray-700 leading-relaxed mb-6">
+          Hello! I'm <strong class="gradient-text">Phanna</strong>, a 17-year-old creative developer passionate about building immersive digital experiences. I blend technical skills with artistic vision to create websites that are both functional and visually stunning.
+        </p>
+        <p class="dark:text-gray-300 text-gray-700 leading-relaxed mb-6">
+          My journey in web development started with curiosity and has grown into a passion for solving problems through code. I'm constantly exploring new technologies and design trends to push the boundaries of what's possible on the web.
+        </p>
+        <div class="flex flex-wrap gap-3">
+          <span class="px-3 py-1 dark:bg-gray-800 bg-gray-100 rounded-full text-sm">HTML/CSS</span>
+          <span class="px-3 py-1 dark:bg-gray-800 bg-gray-100 rounded-full text-sm">JavaScript</span>
+          <span class="px-3 py-1 dark:bg-gray-800 bg-gray-100 rounded-full text-sm">UI/UX Design</span>
+          <span class="px-3 py-1 dark:bg-gray-800 bg-gray-100 rounded-full text-sm">Animation</span>
+          <span class="px-3 py-1 dark:bg-gray-800 bg-gray-100 rounded-full text-sm">Responsive Design</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section class="py-20 px-8 max-w-6xl mx-auto" id="projects">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl font-bold mb-4 section-title inline-block dark:text-white text-gray-900" data-aos="fade-down">My Projects</h2>
+      <p class="dark:text-gray-400 text-gray-600 max-w-2xl mx-auto" data-aos="fade-up">Here are some of my recent works that showcase my skills and creativity</p>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div class="project-card rounded-xl p-6 dark:bg-gray-800/50 bg-white/50" data-aos="fade-up" data-aos-delay="100">
+        <div class="dark:bg-gray-700 bg-gray-100 rounded-lg aspect-video mb-4 flex items-center justify-center">
+          <i class="fas fa-code text-4xl dark:text-gray-500 text-gray-400"></i>
+        </div>
+        <h3 class="text-xl font-bold mb-2 dark:text-white text-gray-900">Portfolio Website</h3>
+        <p class="dark:text-gray-400 text-gray-600 mb-4">A modern portfolio showcasing my work and skills with interactive elements.</p>
+        <div class="flex gap-2 flex-wrap">
+          <span class="px-2 py-1 bg-pink-900/30 text-pink-400 rounded-full text-xs">HTML</span>
+          <span class="px-2 py-1 bg-purple-900/30 text-purple-400 rounded-full text-xs">CSS</span>
+          <span class="px-2 py-1 bg-yellow-900/30 text-yellow-400 rounded-full text-xs">JavaScript</span>
+        </div>
+      </div>
+      
+      <div class="project-card rounded-xl p-6 dark:bg-gray-800/50 bg-white/50" data-aos="fade-up" data-aos-delay="200">
+        <div class="dark:bg-gray-700 bg-gray-100 rounded-lg aspect-video mb-4 flex items-center justify-center">
+          <i class="fas fa-paint-brush text-4xl dark:text-gray-500 text-gray-400"></i>
+        </div>
+        <h3 class="text-xl font-bold mb-2 dark:text-white text-gray-900">UI Design System</h3>
+        <p class="dark:text-gray-400 text-gray-600 mb-4">A comprehensive design system with reusable components and style guidelines.</p>
+        <div class="flex gap-2 flex-wrap">
+          <span class="px-2 py-1 bg-blue-900/30 text-blue-400 rounded-full text-xs">Figma</span>
+          <span class="px-2 py-1 bg-green-900/30 text-green-400 rounded-full text-xs">UI Design</span>
+        </div>
+      </div>
+      
+      <div class="project-card rounded-xl p-6 dark:bg-gray-800/50 bg-white/50" data-aos="fade-up" data-aos-delay="300">
+        <div class="dark:bg-gray-700 bg-gray-100 rounded-lg aspect-video mb-4 flex items-center justify-center">
+          <i class="fas fa-gamepad text-4xl dark:text-gray-500 text-gray-400"></i>
+        </div>
+        <h3 class="text-xl font-bold mb-2 dark:text-white text-gray-900">Interactive Animation</h3>
+        <p class="dark:text-gray-400 text-gray-600 mb-4">A canvas-based animation project with user interaction elements.</p>
+        <div class="flex gap-2 flex-wrap">
+          <span class="px-2 py-1 bg-yellow-900/30 text-yellow-400 rounded-full text-xs">JavaScript</span>
+          <span class="px-2 py-1 bg-red-900/30 text-red-400 rounded-full text-xs">Canvas API</span>
+          <span class="px-2 py-1 bg-purple-900/30 text-purple-400 rounded-full text-xs">GSAP</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="py-20 px-8 max-w-4xl mx-auto text-center" id="contact">
+    <div class="dark:bg-gray-900 bg-gray-100 rounded-2xl p-8 md:p-12 relative overflow-hidden">
+      <div class="absolute -top-20 -right-20 w-64 h-64 bg-pink-500 rounded-full filter blur-3xl opacity-10"></div>
+      <div class="absolute -bottom-20 -left-20 w-64 h-64 bg-purple-500 rounded-full filter blur-3xl opacity-10"></div>
+      
+      <h2 class="text-4xl font-bold mb-6 section-title inline-block dark:text-white text-gray-900" data-aos="fade-down">Get In Touch</h2>
+      <p class="dark:text-gray-300 text-gray-700 max-w-2xl mx-auto mb-8" data-aos="fade-up">Have a project in mind or want to collaborate? Feel free to reach out!</p>
+      
+      <div class="flex flex-wrap justify-center gap-6 mb-12" data-aos="fade-up" data-aos-delay="200">
+        <a href="#" class="social-link dark:text-gray-300 text-gray-700">
+          <i class="fab fa-instagram text-2xl"></i>
+          <span>@phanna</span>
+        </a>
+        <a href="#" class="social-link dark:text-gray-300 text-gray-700">
+          <i class="fab fa-tiktok text-2xl"></i>
+          <span>@phanna_dev</span>
+        </a>
+        <a href="#" class="social-link dark:text-gray-300 text-gray-700">
+          <i class="fas fa-envelope text-2xl"></i>
+          <span>hello@phanna.dev</span>
+        </a>
+        <a href="#" class="social-link dark:text-gray-300 text-gray-700">
+          <i class="fab fa-github text-2xl"></i>
+          <span>github.com/phanna</span>
+        </a>
+      </div>
+      
+      <form class="max-w-md mx-auto text-left" data-aos="fade-up" data-aos-delay="400">
+        <div class="mb-4">
+          <label for="name" class="block dark:text-gray-300 text-gray-700 mb-2">Name</label>
+          <input type="text" id="name" class="w-full px-4 py-3 dark:bg-gray-800 bg-white dark:border-gray-700 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500">
+        </div>
+        <div class="mb-4">
+          <label for="email" class="block dark:text-gray-300 text-gray-700 mb-2">Email</label>
+          <input type="email" id="email" class="w-full px-4 py-3 dark:bg-gray-800 bg-white dark:border-gray-700 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500">
+        </div>
+        <div class="mb-6">
+          <label for="message" class="block dark:text-gray-300 text-gray-700 mb-2">Message</label>
+          <textarea id="message" rows="4" class="w-full px-4 py-3 dark:bg-gray-800 bg-white dark:border-gray-700 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"></textarea>
+        </div>
+        <button type="submit" class="w-full px-6 py-3 bg-gradient-to-r from-pink-500 to-purple-600 rounded-lg font-medium hover:opacity-90 transition-opacity text-white">
+          Send Message
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-8 px-8 dark:border-gray-800 border-gray-200 text-center dark:text-gray-400 text-gray-600">
+    <p>© 2023 PHANNA. All rights reserved.</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    // Initialize AOS animations
+    AOS.init({
+      duration: 800,
+      once: true
+    });
+
+    // Cursor follow effect
+    const cursor = document.getElementById('cursor');
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = `${e.clientX}px`;
+      cursor.style.top = `${e.clientY}px`;
+    });
+    
+    // Cursor hover effect
+    const hoverElements = document.querySelectorAll('a, button, .project-card, input, textarea');
+    hoverElements.forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cursor.classList.add('hover');
+      });
+      el.addEventListener('mouseleave', () => {
+        cursor.classList.remove('hover');
+      });
+    });
+    
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+    
+    // Theme toggle functionality
+    const themeToggle = document.getElementById('theme-toggle');
+    const html = document.documentElement;
+    
+    // Check for saved user preference or use system preference
+    const savedTheme = localStorage.getItem('theme') || 
+                      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    
+    // Apply the saved theme
+    if (savedTheme === 'dark') {
+      html.classList.add('dark');
+      themeToggle.checked = true;
+    } else {
+      html.classList.remove('dark');
+      themeToggle.checked = false;
+    }
+    
+    // Toggle theme on button click
+    themeToggle.addEventListener('change', () => {
+      if (themeToggle.checked) {
+        html.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+      } else {
+        html.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+      }
+    });
+  </script>
+</body>
+</html>
