@@ -1,82 +1,141 @@
 <!DOCTYPE html>
-<html lang="en" class="dark bg-black text-white scroll-smooth">
+<html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Creative developer portfolio of PHANNA showcasing projects, skills, and contact information">
   <title>PHANNA | Creative Developer</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-    
     body {
       font-family: 'Poppins', sans-serif;
       overflow-x: hidden;
       transition: background-color 0.3s, color 0.3s;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
     }
     
-    /* Light mode styles */
-    .light {
+    :root {
       --bg-primary: #ffffff;
       --bg-secondary: #f3f4f6;
       --text-primary: #111827;
       --text-secondary: #4b5563;
       --border-color: #e5e7eb;
+      --nav-bg: rgba(255, 255, 255, 0.8);
+      --project-card-bg: rgba(0, 0, 0, 0.05);
+      --project-card-border: rgba(0, 0, 0, 0.1);
+      --contact-form-bg: #f3f4f6;
+      --contact-form-input-bg: #ffffff;
+      --contact-form-input-border: #e5e7eb;
+      --hero-pattern-color: rgba(0, 0, 0, 0.05);
+      --cursor-bg: rgba(0, 0, 0, 0.2);
+      --cursor-shadow: rgba(0, 0, 0, 0.5);
+      --cursor-hover-bg: rgba(0, 0, 0, 0.1);
+      --modal-bg: #ffffff;
+      --modal-text: #111827;
+      --button-secondary-bg: #e5e7eb;
+      --button-secondary-text: #374151;
+      --learn-more-btn-bg: #ec4899;
+      --learn-more-btn-text: white;
+      --learn-more-btn-hover-bg: #db2777;
     }
     
-    /* Dark mode styles */
     .dark {
-      --bg-primary: #000000;
-      --bg-secondary: #111827;
-      --text-primary: #f3f4f6;
-      --text-secondary: #9ca3af;
-      --border-color: #374151;
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --border-color: #334155;
+      --nav-bg: rgba(15, 23, 42, 0.8);
+      --project-card-bg: rgba(255, 255, 255, 0.05);
+      --project-card-border: rgba(255, 255, 255, 0.1);
+      --contact-form-bg: #1e293b;
+      --contact-form-input-bg: #334155;
+      --contact-form-input-border: #475569;
+      --hero-pattern-color: rgba(255, 255, 255, 0.05);
+      --cursor-bg: rgba(255, 255, 255, 0.2);
+      --cursor-shadow: rgba(255, 255, 255, 0.5);
+      --cursor-hover-bg: rgba(255, 255, 255, 0.1);
+      --modal-bg: #1e293b;
+      --modal-text: #f8fafc;
+      --button-secondary-bg: #334155;
+      --button-secondary-text: #f8fafc;
+      --learn-more-btn-bg: #8b5cf6;
+      --learn-more-btn-hover-bg: #7c3aed;
     }
     
-    /* Cursor Glow */
+    nav {
+      background-color: var(--nav-bg);
+      border-bottom: 1px solid var(--border-color);
+      backdrop-filter: blur(10px);
+    }
+    
+    .project-card {
+      background: var(--project-card-bg);
+      border: 1px solid var(--project-card-border);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.3s ease;
+    }
+    
+    .contact-form-container {
+      background: var(--contact-form-bg);
+    }
+    
+    input[type="text"], input[type="email"], textarea {
+      background-color: var(--contact-form-input-bg) !important;
+      border-color: var(--contact-form-input-border) !important;
+      color: var(--text-primary) !important;
+    }
+    
+    input[type="text"]::placeholder, input[type="email"]::placeholder, textarea::placeholder {
+      color: var(--text-secondary);
+    }
+    
+    .hero-pattern {
+      background-image: radial-gradient(var(--hero-pattern-color) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+
     #cursor {
       width: 30px;
       height: 30px;
       border-radius: 50%;
-      background: rgba(0, 0, 0, 0.2);
+      background: var(--cursor-bg);
       position: fixed;
       pointer-events: none;
       transform: translate(-50%, -50%);
-      transition: transform 0.1s ease-out, width 0.3s, height 0.3s;
+      transition: transform 0.1s ease-out, width 0.3s, height 0.3s, background-color 0.3s;
       z-index: 9999;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 0 20px var(--cursor-shadow);
       mix-blend-mode: difference;
-    }
-    
-    .dark #cursor {
-      background: rgba(255, 255, 255, 0.2);
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
     }
     
     #cursor.hover {
       width: 60px;
       height: 60px;
-      background: rgba(0, 0, 0, 0.1);
-    }
-    
-    .dark #cursor.hover {
-      background: rgba(255, 255, 255, 0.1);
+      background: var(--cursor-hover-bg);
     }
 
-    /* Background blur balls */
     .blur-ball {
       position: absolute;
       border-radius: 9999px;
       filter: blur(100px);
       opacity: 0.3;
-      animation: float 8s ease-in-out infinite;
+      animation: float 12s ease-in-out infinite alternate;
       z-index: -1;
     }
-
+    
     @keyframes float {
-      0%, 100% { transform: translateY(0) rotate(0deg); }
-      50% { transform: translateY(-40px) rotate(5deg); }
+      0% { transform: translateY(0px) translateX(0px) rotate(0deg); }
+      50% { transform: translateY(-30px) translateX(20px) rotate(10deg); }
+      100% { transform: translateY(20px) translateX(-10px) rotate(-5deg); }
     }
     
     .gradient-text {
@@ -95,15 +154,7 @@
     }
     
     .project-card {
-      background: rgba(255, 255, 255, 0.05);
       backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      transition: all 0.3s ease;
-    }
-    
-    .light .project-card {
-      background: rgba(0, 0, 0, 0.05);
-      border: 1px solid rgba(0, 0, 0, 0.1);
     }
     
     .project-card:hover {
@@ -142,6 +193,7 @@
     
     .nav-link {
       position: relative;
+      color: var(--text-primary);
     }
     
     .nav-link:after {
@@ -165,17 +217,10 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background-image: radial-gradient(rgba(0, 0, 0, 0.1) 1px, transparent 1px);
-      background-size: 20px 20px;
-      z-index: -1;
+      z-index: 0;
       opacity: 0.3;
     }
-    
-    .light .hero-pattern {
-      background-image: radial-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px);
-    }
-    
-    /* Theme toggle switch */
+        
     .theme-toggle {
       position: relative;
       display: inline-block;
@@ -217,295 +262,905 @@
       background-color: #ec4899;
     }
     
+    .dark input:not(:checked) + .theme-slider {
+      background-color: #4b5563;
+    }
+    
+    .light input:checked + .theme-slider {
+      background-color: #ec4899;
+    }
+    
+    .light input:not(:checked) + .theme-slider {
+      background-color: #cbd5e1;
+    }
+    
     input:checked + .theme-slider:before {
       transform: translateX(26px);
     }
+
+    #mobile-menu {
+      transition: transform 0.3s ease-in-out;
+      background-color: var(--bg-secondary);
+      backdrop-filter: blur(10px);
+    }
     
-    /* Dark mode specific styles */
-    .dark nav {
+    .menu-icon {
+      color: var(--text-primary);
+    }
+
+    /* Modal Styles */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
       background-color: rgba(0, 0, 0, 0.5);
-      border-bottom-color: #374151;
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
     }
     
-    .light nav {
-      background-color: rgba(255, 255, 255, 0.5);
-      border-bottom-color: #e5e7eb;
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
     }
     
-    .dark .project-card-bg {
-      background-color: rgba(30, 30, 30, 0.7);
+    .modal-content {
+      background-color: var(--modal-bg);
+      color: var(--modal-text);
+      padding: 2rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      width: 90%;
+      max-width: 500px;
+      max-height: 80vh;
+      overflow-y: auto;
+      transform: scale(0.95);
+      transition: transform 0.3s ease;
+      border: 1px solid var(--border-color);
     }
     
-    .light .project-card-bg {
-      background-color: rgba(243, 244, 246, 0.7);
+    .modal-overlay.active .modal-content {
+      transform: scale(1);
     }
     
-    .dark .contact-bg {
-      background: linear-gradient(to bottom right, #111827, #1f2937);
+    .modal-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--text-primary);
     }
     
-    .light .contact-bg {
-      background: linear-gradient(to bottom right, #f3f4f6, #e5e7eb);
+    .modal-body {
+      margin-bottom: 1.5rem;
+      white-space: pre-wrap;
+    }
+    
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.5rem;
+    }
+    
+    .modal-button {
+      padding: 0.5rem 1rem;
+      border-radius: 0.375rem;
+      font-weight: 500;
+      transition: opacity 0.2s;
+      border: none;
+      cursor: pointer;
+    }
+    
+    .modal-button.primary {
+      background-color: #ec4899;
+      color: white;
+    }
+    
+    .modal-button.primary:hover {
+      opacity: 0.9;
+    }
+    
+    .modal-button.secondary {
+      background-color: var(--button-secondary-bg);
+      color: var(--button-secondary-text);
+    }
+    
+    .modal-button.secondary:hover {
+      opacity: 0.9;
+    }
+
+    /* Loading Spinner */
+    .loader {
+      border: 4px solid var(--border-color);
+      border-top: 4px solid #ec4899;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      animation: spin 1s linear infinite;
+      display: inline-block; 
+      margin-left: 8px; 
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .hidden {
+      display: none !important;
+    }
+
+    /* Learn More Button Styling */
+    .learn-more-btn {
+      background-color: var(--learn-more-btn-bg);
+      color: var(--learn-more-btn-text);
+      transition: background-color 0.3s ease;
+      margin-top: auto;
+      align-self: flex-start;
+      cursor: pointer;
+      border: none;
+      border-radius: 0.375rem;
+      padding: 0.5rem 1rem;
+    }
+    
+    .learn-more-btn:hover {
+      background-color: var(--learn-more-btn-hover-bg);
+    }
+    
+    /* Improved form styling */
+    .form-input {
+      transition: all 0.3s ease;
+    }
+    
+    .form-input:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.3);
+    }
+    
+    /* Better mobile menu transitions */
+    @media (max-width: 767px) {
+      #mobile-menu {
+        transform: translateX(100%);
+      }
+      
+      #mobile-menu.translate-x-0 {
+        transform: translateX(0);
+      }
+    }
+    
+    /* Smooth scroll behavior */
+    html {
+      scroll-behavior: smooth;
+    }
+    
+    /* Improved project card aspect ratio */
+    .project-image-container {
+      aspect-ratio: 16/9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    /* Better focus states for accessibility */
+    a:focus, button:focus, input:focus, textarea:focus {
+      outline: 2px solid #ec4899;
+      outline-offset: 2px;
+    }
+    
+    /* Improved dark mode colors */
+    .dark .project-card:hover {
+      border-color: rgba(139, 92, 246, 0.3);
+    }
+    
+    /* Better contrast for text */
+    .dark {
+      --text-primary: #f8fafc;
+      --text-secondary: #cbd5e1;
     }
   </style>
 </head>
-<body class="dark:bg-black dark:text-white bg-white text-gray-900">
+<body>
 
-  <!-- Custom Cursor -->
   <div id="cursor"></div>
 
-  <!-- Floating Background Balls -->
   <div class="blur-ball bg-purple-500 w-72 h-72 top-10 left-10"></div>
   <div class="blur-ball bg-pink-500 w-96 h-96 bottom-20 right-10"></div>
   <div class="blur-ball bg-blue-500 w-64 h-64 top-1/2 left-1/4"></div>
 
-  <!-- Navigation -->
-  <nav class="fixed w-full py-6 px-8 z-50 backdrop-blur-md dark:bg-black/50 bg-white/50 dark:border-gray-800 border-gray-200">
+  <nav class="fixed w-full py-4 px-4 sm:px-8 z-50">
     <div class="max-w-6xl mx-auto flex justify-between items-center">
-      <a href="#" class="text-2xl font-bold gradient-text">PHANNA</a>
-      <div class="flex items-center gap-8">
+      <a href="#" class="text-2xl font-bold gradient-text hover:opacity-90 transition-opacity">PHANNA</a>
+      <div class="flex items-center gap-4 sm:gap-8">
         <div class="hidden md:flex gap-8">
-          <a href="#about" class="nav-link dark:text-white text-gray-900">About</a>
-          <a href="#projects" class="nav-link dark:text-white text-gray-900">Projects</a>
-          <a href="#contact" class="nav-link dark:text-white text-gray-900">Contact</a>
+          <a href="#about" class="nav-link">About</a>
+          <a href="#projects" class="nav-link">Projects</a>
+          <a href="#contact" class="nav-link">Contact</a>
         </div>
-        
-        <!-- Theme toggle -->
-        <label class="theme-toggle ml-4">
-          <input type="checkbox" id="theme-toggle">
+        <label class="theme-toggle ml-0 sm:ml-4" aria-label="Toggle dark mode">
+          <input type="checkbox" id="theme-toggle-checkbox">
           <span class="theme-slider"></span>
         </label>
-        
-        <button class="md:hidden text-2xl dark:text-white text-gray-900">
+        <button id="mobile-menu-button" class="md:hidden text-2xl menu-icon" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
           <i class="fas fa-bars"></i>
         </button>
       </div>
     </div>
   </nav>
 
-  <!-- Hero Section -->
-  <section class="h-screen flex items-center justify-center flex-col text-center relative z-10">
+  <div id="mobile-menu" class="fixed top-0 right-0 h-full w-64 transform md:hidden p-8 shadow-lg z-40 pt-20">
+      <a href="#about" class="block nav-link py-3 mobile-nav-link" onclick="toggleMobileMenu()">About</a>
+      <a href="#projects" class="block nav-link py-3 mobile-nav-link" onclick="toggleMobileMenu()">Projects</a>
+      <a href="#contact" class="block nav-link py-3 mobile-nav-link" onclick="toggleMobileMenu()">Contact</a>
+  </div>
+
+  <section class="min-h-screen flex items-center justify-center flex-col text-center relative pt-16 px-4">
     <div class="hero-pattern"></div>
-    <div class="max-w-4xl px-6">
-      <h1 class="text-6xl md:text-8xl font-bold mb-6" data-aos="fade-down">
+    <div class="max-w-4xl px-6 relative z-10">
+      <h1 class="text-5xl sm:text-6xl md:text-7xl font-bold mb-6" data-aos="fade-down">
         <span class="gradient-text">PHANNA</span>
       </h1>
-      <p class="text-xl md:text-2xl dark:text-gray-400 text-gray-600 mb-8" data-aos="fade-up" data-aos-delay="300">
+      <p class="text-lg sm:text-xl md:text-2xl text-[var(--text-secondary)] mb-8" data-aos="fade-up" data-aos-delay="300">
         Crafting digital experiences with code & creativity
       </p>
-      <div class="flex gap-4 justify-center" data-aos="fade-up" data-aos-delay="600">
-        <a href="#projects" class="px-6 py-3 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full font-medium hover:opacity-90 transition-opacity text-white">
+      <div class="flex flex-col sm:flex-row gap-4 justify-center" data-aos="fade-up" data-aos-delay="600">
+        <a href="#projects" class="px-6 py-3 bg-gradient-to-r from-pink-500 to-purple-600 rounded-lg sm:rounded-full font-medium hover:opacity-90 transition-opacity text-white">
           View Work
         </a>
-        <a href="#contact" class="px-6 py-3 border dark:border-gray-600 border-gray-300 rounded-full font-medium hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all">
+        <a href="#contact" class="px-6 py-3 border border-[var(--border-color)] rounded-lg sm:rounded-full font-medium hover:bg-[var(--text-primary)] hover:text-[var(--bg-primary)] transition-colors">
           Contact Me
         </a>
       </div>
     </div>
-    
-    <div class="absolute bottom-10 left-0 right-0 flex justify-center animate-bounce">
-      <a href="#about" class="text-2xl dark:text-white text-gray-900">
+    <div class="absolute bottom-10 left-0 right-0 flex justify-center animate-bounce z-10">
+      <a href="#about" class="text-2xl text-[var(--text-primary)]" aria-label="Scroll down">
         <i class="fas fa-chevron-down"></i>
       </a>
     </div>
   </section>
 
-  <!-- About Me Section -->
-  <section class="py-20 px-8 max-w-4xl mx-auto relative" id="about">
-    <div class="flex flex-col md:flex-row gap-12 items-center">
+  <section class="py-16 sm:py-20 px-4 sm:px-8 max-w-4xl mx-auto relative" id="about">
+    <div class="flex flex-col md:flex-row gap-8 md:gap-12 items-center">
       <div class="md:w-1/3" data-aos="fade-right">
-        <div class="bg-gradient-to-br from-pink-500 to-purple-600 p-1 rounded-full">
-          <div class="bg-white dark:bg-black rounded-full p-2">
-            <img src="IMG_0557.JPG" 
-                 alt="Phanna" 
+        <div class="bg-gradient-to-br from-pink-500 to-purple-600 p-1 rounded-full shadow-lg">
+          <div class="bg-[var(--bg-primary)] rounded-full p-1 sm:p-2">
+            <img src="/image/IMG_0557.JPG" 
+                 onerror="this.onerror=null; this.src='https://placehold.co/400x400/cccccc/333333?text=Image+Not+Found';"
+                 alt="Phanna - Creative Developer" 
                  class="rounded-full w-full aspect-square object-cover">
           </div>
         </div>
       </div>
       <div class="md:w-2/3" data-aos="fade-left">
-        <h2 class="text-4xl font-bold mb-6 section-title dark:text-white text-gray-900">About Me</h2>
-        <p class="dark:text-gray-300 text-gray-700 leading-relaxed mb-6">
-          Hello! I'm <strong class="gradient-text">Phanna</strong>, a 17-year-old creative developer passionate about building immersive digital experiences. I blend technical skills with artistic vision to create websites that are both functional and visually stunning.
-        </p>
-        <p class="dark:text-gray-300 text-gray-700 leading-relaxed mb-6">
-          My journey in web development started with curiosity and has grown into a passion for solving problems through code. I'm constantly exploring new technologies and design trends to push the boundaries of what's possible on the web.
-        </p>
-        <div class="flex flex-wrap gap-3">
-          <span class="px-3 py-1 dark:bg-gray-800 bg-gray-100 rounded-full text-sm">HTML/CSS</span>
-          <span class="px-3 py-1 dark:bg-gray-800 bg-gray-100 rounded-full text-sm">JavaScript</span>
-          <span class="px-3 py-1 dark:bg-gray-800 bg-gray-100 rounded-full text-sm">UI/UX Design</span>
-          <span class="px-3 py-1 dark:bg-gray-800 bg-gray-100 rounded-full text-sm">Animation</span>
-          <span class="px-3 py-1 dark:bg-gray-800 bg-gray-100 rounded-full text-sm">Responsive Design</span>
+        <div class="flex items-center justify-between mb-6">
+            <h2 class="text-3xl sm:text-4xl font-bold section-title text-[var(--text-primary)]">About Me</h2>
+            <button id="enhance-bio-button" class="ml-4 px-3 py-2 text-sm bg-gradient-to-r from-pink-500 to-purple-600 text-white rounded-md hover:opacity-90 transition-opacity flex items-center">
+                ✨ Enhance Bio
+                <span id="bio-loader" class="loader hidden"></span>
+            </button>
         </div>
+        <div id="bio-content">
+            <p class="text-[var(--text-secondary)] leading-relaxed mb-6">
+            Hello! I'm <strong class="gradient-text">Phanna</strong>, a 17-year-old creative developer passionate about building immersive digital experiences. I blend technical skills with artistic vision to create websites that are both functional and visually stunning.
+            </p>
+            <p class="text-[var(--text-secondary)] leading-relaxed mb-6">
+            My journey in web development started with curiosity and has grown into a passion for solving problems through code. I'm constantly exploring new technologies and design trends to push the boundaries of what's possible on the web.
+            </p>
+        </div>
+        <h3 class="text-lg font-semibold text-[var(--text-primary)] mb-3">My Skills:</h3>
+        <ul class="flex flex-wrap gap-2 sm:gap-3" aria-label="Skills">
+          <li><span class="px-3 py-1 bg-[var(--bg-secondary)] text-[var(--text-secondary)] rounded-full text-sm border border-[var(--border-color)]">HTML/CSS</span></li>
+          <li><span class="px-3 py-1 bg-[var(--bg-secondary)] text-[var(--text-secondary)] rounded-full text-sm border border-[var(--border-color)]">JavaScript</span></li>
+          <li><span class="px-3 py-1 bg-[var(--bg-secondary)] text-[var(--text-secondary)] rounded-full text-sm border border-[var(--border-color)]">React</span></li>
+          <li><span class="px-3 py-1 bg-[var(--bg-secondary)] text-[var(--text-secondary)] rounded-full text-sm border border-[var(--border-color)]">UI/UX Design</span></li>
+          <li><span class="px-3 py-1 bg-[var(--bg-secondary)] text-[var(--text-secondary)] rounded-full text-sm border border-[var(--border-color)]">Animation</span></li>
+          <li><span class="px-3 py-1 bg-[var(--bg-secondary)] text-[var(--text-secondary)] rounded-full text-sm border border-[var(--border-color)]">Responsive Design</span></li>
+          <li><span class="px-3 py-1 bg-[var(--bg-secondary)] text-[var(--text-secondary)] rounded-full text-sm border border-[var(--border-color)]">Tailwind CSS</span></li>
+        </ul>
       </div>
     </div>
   </section>
 
-  <!-- Projects -->
-  <section class="py-20 px-8 max-w-6xl mx-auto" id="projects">
-    <div class="text-center mb-16">
-      <h2 class="text-4xl font-bold mb-4 section-title inline-block dark:text-white text-gray-900" data-aos="fade-down">My Projects</h2>
-      <p class="dark:text-gray-400 text-gray-600 max-w-2xl mx-auto" data-aos="fade-up">Here are some of my recent works that showcase my skills and creativity</p>
+  <section class="py-16 sm:py-20 px-4 sm:px-8 max-w-6xl mx-auto" id="projects">
+    <div class="text-center mb-12 sm:mb-16">
+      <h2 class="text-3xl sm:text-4xl font-bold mb-4 section-title inline-block text-[var(--text-primary)]" data-aos="fade-down">My Projects</h2>
+      <p class="text-[var(--text-secondary)] max-w-2xl mx-auto" data-aos="fade-up">Here are some of my recent works that showcase my skills and creativity</p>
     </div>
-    
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      <div class="project-card rounded-xl p-6 dark:bg-gray-800/50 bg-white/50" data-aos="fade-up" data-aos-delay="100">
-        <div class="dark:bg-gray-700 bg-gray-100 rounded-lg aspect-video mb-4 flex items-center justify-center">
-          <i class="fas fa-code text-4xl dark:text-gray-500 text-gray-400"></i>
+      <div class="project-card rounded-xl p-6" data-aos="fade-up" data-aos-delay="100" data-project-id="portfolio">
+        <div>
+          <div class="project-image-container bg-[var(--bg-secondary)] rounded-lg mb-4 flex items-center justify-center border border-[var(--border-color)]">
+            <i class="fas fa-code text-4xl text-[var(--text-secondary)]"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-2 text-[var(--text-primary)] project-title-for-modal">Portfolio Website</h3>
+          <p class="text-[var(--text-secondary)] mb-4 text-sm">A modern portfolio showcasing my work and skills with interactive elements.</p>
+          <div class="flex gap-2 flex-wrap mb-4">
+            <span class="px-2 py-1 bg-pink-600/20 text-pink-400 rounded-full text-xs">HTML</span>
+            <span class="px-2 py-1 bg-purple-600/20 text-purple-400 rounded-full text-xs">CSS</span>
+            <span class="px-2 py-1 bg-yellow-500/20 text-yellow-300 rounded-full text-xs">JavaScript</span>
+            <span class="px-2 py-1 bg-blue-600/20 text-blue-400 rounded-full text-xs">Tailwind</span>
+          </div>
         </div>
-        <h3 class="text-xl font-bold mb-2 dark:text-white text-gray-900">Portfolio Website</h3>
-        <p class="dark:text-gray-400 text-gray-600 mb-4">A modern portfolio showcasing my work and skills with interactive elements.</p>
-        <div class="flex gap-2 flex-wrap">
-          <span class="px-2 py-1 bg-pink-900/30 text-pink-400 rounded-full text-xs">HTML</span>
-          <span class="px-2 py-1 bg-purple-900/30 text-purple-400 rounded-full text-xs">CSS</span>
-          <span class="px-2 py-1 bg-yellow-900/30 text-yellow-400 rounded-full text-xs">JavaScript</span>
-        </div>
+        <button type="button" class="learn-more-btn mt-auto px-4 py-2 rounded-md text-sm font-medium inline-block project-details-trigger">
+            Learn More <i class="fas fa-arrow-right ml-1 text-xs"></i>
+        </button>
       </div>
       
-      <div class="project-card rounded-xl p-6 dark:bg-gray-800/50 bg-white/50" data-aos="fade-up" data-aos-delay="200">
-        <div class="dark:bg-gray-700 bg-gray-100 rounded-lg aspect-video mb-4 flex items-center justify-center">
-          <i class="fas fa-paint-brush text-4xl dark:text-gray-500 text-gray-400"></i>
+      <div class="project-card rounded-xl p-6" data-aos="fade-up" data-aos-delay="200" data-project-id="ui-system">
+        <div>
+          <div class="project-image-container bg-[var(--bg-secondary)] rounded-lg mb-4 flex items-center justify-center border border-[var(--border-color)]">
+            <i class="fas fa-paint-brush text-4xl text-[var(--text-secondary)]"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-2 text-[var(--text-primary)] project-title-for-modal">UI Design System</h3>
+          <p class="text-[var(--text-secondary)] mb-4 text-sm">A comprehensive design system with reusable components and style guidelines.</p>
+          <div class="flex gap-2 flex-wrap mb-4">
+            <span class="px-2 py-1 bg-blue-600/20 text-blue-400 rounded-full text-xs">Figma</span>
+            <span class="px-2 py-1 bg-green-600/20 text-green-400 rounded-full text-xs">UI Design</span>
+            <span class="px-2 py-1 bg-purple-600/20 text-purple-400 rounded-full text-xs">Design Tokens</span>
+          </div>
         </div>
-        <h3 class="text-xl font-bold mb-2 dark:text-white text-gray-900">UI Design System</h3>
-        <p class="dark:text-gray-400 text-gray-600 mb-4">A comprehensive design system with reusable components and style guidelines.</p>
-        <div class="flex gap-2 flex-wrap">
-          <span class="px-2 py-1 bg-blue-900/30 text-blue-400 rounded-full text-xs">Figma</span>
-          <span class="px-2 py-1 bg-green-900/30 text-green-400 rounded-full text-xs">UI Design</span>
-        </div>
+        <button type="button" class="learn-more-btn mt-auto px-4 py-2 rounded-md text-sm font-medium inline-block project-details-trigger">
+            Learn More <i class="fas fa-arrow-right ml-1 text-xs"></i>
+        </button>
       </div>
       
-      <div class="project-card rounded-xl p-6 dark:bg-gray-800/50 bg-white/50" data-aos="fade-up" data-aos-delay="300">
-        <div class="dark:bg-gray-700 bg-gray-100 rounded-lg aspect-video mb-4 flex items-center justify-center">
-          <i class="fas fa-gamepad text-4xl dark:text-gray-500 text-gray-400"></i>
+      <div class="project-card rounded-xl p-6" data-aos="fade-up" data-aos-delay="300" data-project-id="animation">
+        <div>
+          <div class="project-image-container bg-[var(--bg-secondary)] rounded-lg mb-4 flex items-center justify-center border border-[var(--border-color)]">
+            <i class="fas fa-gamepad text-4xl text-[var(--text-secondary)]"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-2 text-[var(--text-primary)] project-title-for-modal">Interactive Animation</h3>
+          <p class="text-[var(--text-secondary)] mb-4 text-sm">A canvas-based animation project with user interaction elements.</p>
+          <div class="flex gap-2 flex-wrap mb-4">
+            <span class="px-2 py-1 bg-yellow-500/20 text-yellow-300 rounded-full text-xs">JavaScript</span>
+            <span class="px-2 py-1 bg-red-600/20 text-red-400 rounded-full text-xs">Canvas API</span>
+            <span class="px-2 py-1 bg-purple-600/20 text-purple-400 rounded-full text-xs">GSAP</span>
+          </div>
         </div>
-        <h3 class="text-xl font-bold mb-2 dark:text-white text-gray-900">Interactive Animation</h3>
-        <p class="dark:text-gray-400 text-gray-600 mb-4">A canvas-based animation project with user interaction elements.</p>
-        <div class="flex gap-2 flex-wrap">
-          <span class="px-2 py-1 bg-yellow-900/30 text-yellow-400 rounded-full text-xs">JavaScript</span>
-          <span class="px-2 py-1 bg-red-900/30 text-red-400 rounded-full text-xs">Canvas API</span>
-          <span class="px-2 py-1 bg-purple-900/30 text-purple-400 rounded-full text-xs">GSAP</span>
+        <button type="button" class="learn-more-btn mt-auto px-4 py-2 rounded-md text-sm font-medium inline-block project-details-trigger">
+            Learn More <i class="fas fa-arrow-right ml-1 text-xs"></i>
+        </button>
+      </div>
+      
+      <div class="project-card rounded-xl p-6" data-aos="fade-up" data-aos-delay="400" data-project-id="resume-analyzer">
+        <div>
+          <div class="project-image-container bg-[var(--bg-secondary)] rounded-lg mb-4 flex items-center justify-center border border-[var(--border-color)]">
+            <i class="fas fa-brain text-4xl text-[var(--text-secondary)]"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-2 text-[var(--text-primary)] project-title-for-modal">AI Resume Analyzer</h3>
+          <p class="text-[var(--text-secondary)] mb-4 text-sm">An AI-powered tool that reviews and scores resumes based on job descriptions using NLP and machine learning.</p>
+          <div class="flex gap-2 flex-wrap mb-4">
+            <span class="px-2 py-1 bg-green-600/20 text-green-400 rounded-full text-xs">Python</span>
+            <span class="px-2 py-1 bg-orange-600/20 text-orange-400 rounded-full text-xs">spaCy</span>
+            <span class="px-2 py-1 bg-sky-600/20 text-sky-400 rounded-full text-xs">scikit-learn</span>
+            <span class="px-2 py-1 bg-red-600/20 text-red-400 rounded-full text-xs">Streamlit</span>
+          </div>
         </div>
+        <button type="button" class="learn-more-btn mt-auto px-4 py-2 rounded-md text-sm font-medium inline-block project-details-trigger">
+            Learn More <i class="fas fa-arrow-right ml-1 text-xs"></i>
+        </button>
+      </div>
+      
+      <div class="project-card rounded-xl p-6" data-aos="fade-up" data-aos-delay="500" data-project-id="ecommerce">
+        <div>
+          <div class="project-image-container bg-[var(--bg-secondary)] rounded-lg mb-4 flex items-center justify-center border border-[var(--border-color)]">
+            <i class="fas fa-shopping-cart text-4xl text-[var(--text-secondary)]"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-2 text-[var(--text-primary)] project-title-for-modal">E-commerce Store</h3>
+          <p class="text-[var(--text-secondary)] mb-4 text-sm">A fully responsive e-commerce platform with product filtering and cart functionality.</p>
+          <div class="flex gap-2 flex-wrap mb-4">
+            <span class="px-2 py-1 bg-blue-600/20 text-blue-400 rounded-full text-xs">React</span>
+            <span class="px-2 py-1 bg-purple-600/20 text-purple-400 rounded-full text-xs">Next.js</span>
+            <span class="px-2 py-1 bg-green-600/20 text-green-400 rounded-full text-xs">Node.js</span>
+          </div>
+        </div>
+        <button type="button" class="learn-more-btn mt-auto px-4 py-2 rounded-md text-sm font-medium inline-block project-details-trigger">
+            Learn More <i class="fas fa-arrow-right ml-1 text-xs"></i>
+        </button>
+      </div>
+      
+      <div class="project-card rounded-xl p-6" data-aos="fade-up" data-aos-delay="600" data-project-id="weather-app">
+        <div>
+          <div class="project-image-container bg-[var(--bg-secondary)] rounded-lg mb-4 flex items-center justify-center border border-[var(--border-color)]">
+            <i class="fas fa-cloud-sun text-4xl text-[var(--text-secondary)]"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-2 text-[var(--text-primary)] project-title-for-modal">Weather Dashboard</h3>
+          <p class="text-[var(--text-secondary)] mb-4 text-sm">A weather application with 5-day forecast, location search, and animated weather icons.</p>
+          <div class="flex gap-2 flex-wrap mb-4">
+            <span class="px-2 py-1 bg-blue-600/20 text-blue-400 rounded-full text-xs">React</span>
+            <span class="px-2 py-1 bg-yellow-500/20 text-yellow-300 rounded-full text-xs">API</span>
+            <span class="px-2 py-1 bg-green-600/20 text-green-400 rounded-full text-xs">Chart.js</span>
+          </div>
+        </div>
+        <button type="button" class="learn-more-btn mt-auto px-4 py-2 rounded-md text-sm font-medium inline-block project-details-trigger">
+            Learn More <i class="fas fa-arrow-right ml-1 text-xs"></i>
+        </button>
       </div>
     </div>
   </section>
 
-  <!-- Contact -->
-  <section class="py-20 px-8 max-w-4xl mx-auto text-center" id="contact">
-    <div class="dark:bg-gray-900 bg-gray-100 rounded-2xl p-8 md:p-12 relative overflow-hidden">
-      <div class="absolute -top-20 -right-20 w-64 h-64 bg-pink-500 rounded-full filter blur-3xl opacity-10"></div>
-      <div class="absolute -bottom-20 -left-20 w-64 h-64 bg-purple-500 rounded-full filter blur-3xl opacity-10"></div>
-      
-      <h2 class="text-4xl font-bold mb-6 section-title inline-block dark:text-white text-gray-900" data-aos="fade-down">Get In Touch</h2>
-      <p class="dark:text-gray-300 text-gray-700 max-w-2xl mx-auto mb-8" data-aos="fade-up">Have a project in mind or want to collaborate? Feel free to reach out!</p>
-      
-      <div class="flex flex-wrap justify-center gap-6 mb-12" data-aos="fade-up" data-aos-delay="200">
-        <a href="#" class="social-link dark:text-gray-300 text-gray-700">
-          <i class="fab fa-instagram text-2xl"></i>
-          <span>@phanna</span>
-        </a>
-        <a href="https://www.tiktok.com/@phanna.03?is_from_webapp=1&sender_device=pc" class="social-link dark:text-gray-300 text-gray-700">
-          <i class="fab fa-tiktok text-2xl"></i>
-          <span>@phanna_dev</span>
-        </a>
-        <a href="mailto:tat38254@gmail.com" class="social-link dark:text-gray-300 text-gray-700">
-          <i class="fas fa-envelope text-2xl"></i>
-          <span>tat38254@gmail.com</span>
-        </a>
-        <a href="#" class="social-link dark:text-gray-300 text-gray-700">
-          <i class="fab fa-github text-2xl"></i>
-          <span>github.com/phanna</span>
-        </a>
-      </div>
-      
-      <form class="max-w-md mx-auto text-left" data-aos="fade-up" data-aos-delay="400">
+  <section class="py-16 sm:py-20 px-4 sm:px-8 max-w-4xl mx-auto text-center" id="contact">
+    <div class="contact-form-container rounded-2xl p-6 sm:p-8 md:p-12 relative overflow-hidden border border-[var(--border-color)]">
+      <div class="absolute -top-20 -right-20 w-64 h-64 bg-pink-500 rounded-full filter blur-3xl opacity-10 pointer-events-none"></div>
+      <div class="absolute -bottom-20 -left-20 w-64 h-64 bg-purple-500 rounded-full filter blur-3xl opacity-10 pointer-events-none"></div>
+      <h2 class="text-3xl sm:text-4xl font-bold mb-6 section-title inline-block text-[var(--text-primary)]" data-aos="fade-down">Get In Touch</h2>
+      <p class="text-[var(--text-secondary)] max-w-2xl mx-auto mb-8" data-aos="fade-up">Have a project in mind or want to collaborate? Feel free to reach out!</p>
+      <ul class="flex flex-wrap justify-center gap-4 sm:gap-6 mb-10 sm:mb-12" data-aos="fade-up" data-aos-delay="200" aria-label="Social media links">
+        <li><a href="https://l.messenger.com/l.php?u=https%3A%2F%2Fwww.instagram.com%2Fpannaphal%3Figsh%3DMXF3dnVjMG53Nm50Zw%253D%253D%26utm_source%3Dqr&h=AT2zq2U-oCEAh295nJ7k-zMAXpvfjPM75jMmCPvyrYNNwgd5wCDSpnE4INK1lmXXjtF5ST7qP4pt6hdMyGphTC5qZTYAXJfJaKh4dk7D5UTVIZaRiQpCmiVrjVLs4IGW5UCRyg" class="social-link text-[var(--text-secondary)] hover:text-pink-500"><i class="fab fa-instagram text-2xl"></i><span class="hidden sm:inline">@phanna</span></a></li>
+        <li><a href="https://www.tiktok.com/@phanna.03?is_from_webapp=1&sender_device=pc" target="_blank" rel="noopener noreferrer" class="social-link text-[var(--text-secondary)] hover:text-pink-500"><i class="fab fa-tiktok text-2xl"></i><span class="hidden sm:inline">@phanna_dev</span></a></li>
+        <li><a href="mailto:tat38254@gmail.com" class="social-link text-[var(--text-secondary)] hover:text-pink-500"><i class="fas fa-envelope text-2xl"></i><span class="hidden sm:inline">tat38254@gmail.com</span></a></li>
+        <li><a href="https://github.com/Phanna125" class="social-link text-[var(--text-secondary)] hover:text-pink-500"><i class="fab fa-github text-2xl"></i><span class="hidden sm:inline">github.com/phanna</span></a></li>
+      </ul>
+      <form id="contact-form" class="max-w-md mx-auto text-left" data-aos="fade-up" data-aos-delay="400">
         <div class="mb-4">
-          <label for="name" class="block dark:text-gray-300 text-gray-700 mb-2">Name</label>
-          <input type="text" id="name" class="w-full px-4 py-3 dark:bg-gray-800 bg-white dark:border-gray-700 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500">
+          <label for="name" class="block text-[var(--text-secondary)] mb-2">Your Name</label>
+          <input type="text" id="name" name="name" class="w-full px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500 border form-input" placeholder="Enter your name" required>
         </div>
         <div class="mb-4">
-          <label for="email" class="block dark:text-gray-300 text-gray-700 mb-2">Email</label>
-          <input type="email" id="email" class="w-full px-4 py-3 dark:bg-gray-800 bg-white dark:border-gray-700 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500">
+          <label for="email" class="block text-[var(--text-secondary)] mb-2">Your Email</label>
+          <input type="email" id="email" name="email" class="w-full px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500 border form-input" placeholder="Enter your email" required>
+        </div>
+        <div class="mb-4">
+          <label for="inquiry-topic" class="block text-[var(--text-secondary)] mb-2">What's your inquiry about?</label>
+          <input type="text" id="inquiry-topic" name="inquiry-topic" class="w-full px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500 border form-input" placeholder="Briefly describe your reason for contacting">
+        </div>
+        <div class="mb-4">
+            <button type="button" id="generate-message-button" class="w-full px-6 py-3 bg-gradient-to-r from-teal-400 to-blue-500 text-white rounded-lg font-medium hover:opacity-90 transition-opacity flex items-center justify-center">
+                ✨ Generate Message Draft
+                <span id="message-loader" class="loader hidden"></span>
+            </button>
         </div>
         <div class="mb-6">
-          <label for="message" class="block dark:text-gray-300 text-gray-700 mb-2">Message</label>
-          <textarea id="message" rows="4" class="w-full px-4 py-3 dark:bg-gray-800 bg-white dark:border-gray-700 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"></textarea>
+          <label for="message" class="block text-[var(--text-secondary)] mb-2">Message</label>
+          <textarea id="message" name="message" rows="5" required class="w-full px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500 border form-input" placeholder="Your detailed message or AI-generated draft will appear here..."></textarea>
         </div>
         <button type="submit" class="w-full px-6 py-3 bg-gradient-to-r from-pink-500 to-purple-600 rounded-lg font-medium hover:opacity-90 transition-opacity text-white">
           Send Message
         </button>
+        <p id="form-status" class="mt-4 text-sm text-center"></p>
       </form>
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer class="py-8 px-8 dark:border-gray-800 border-gray-200 text-center dark:text-gray-400 text-gray-600">
-    <p>© 2023 PHANNA. All rights reserved.</p>
+  <footer class="py-8 px-4 sm:px-8 border-t border-[var(--border-color)] text-center text-[var(--text-secondary)]">
+    <p>&copy; <span id="current-year"></span> PHANNA. All rights reserved.</p>
   </footer>
 
-  <!-- Scripts -->
+  <div id="ai-modal" class="modal-overlay">
+    <div class="modal-content">
+        <h3 id="modal-title" class="modal-title">AI Suggestion</h3>
+        <div id="modal-body" class="modal-body"></div>
+        <div id="modal-actions" class="modal-actions"></div>
+    </div>
+  </div>
+
   <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
   <script>
-    // Initialize AOS animations
+    // Initialize AOS animation library
     AOS.init({
       duration: 800,
-      once: true
+      once: true,
+      offset: 50,
+      easing: 'ease-in-out'
     });
 
-    // Cursor follow effect
-    const cursor = document.getElementById('cursor');
-    document.addEventListener('mousemove', e => {
-      cursor.style.left = `${e.clientX}px`;
-      cursor.style.top = `${e.clientY}px`;
-    });
-    
-    // Cursor hover effect
-    const hoverElements = document.querySelectorAll('a, button, .project-card, input, textarea');
-    hoverElements.forEach(el => {
-      el.addEventListener('mouseenter', () => {
-        cursor.classList.add('hover');
-      });
-      el.addEventListener('mouseleave', () => {
-        cursor.classList.remove('hover');
-      });
-    });
-    
-    // Smooth scrolling for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-          behavior: 'smooth'
-        });
-      });
-    });
-    
     // Theme toggle functionality
-    const themeToggle = document.getElementById('theme-toggle');
-    const html = document.documentElement;
-    
-    // Check for saved user preference or use system preference
-    const savedTheme = localStorage.getItem('theme') || 
-                      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-    
-    // Apply the saved theme
-    if (savedTheme === 'dark') {
-      html.classList.add('dark');
-      themeToggle.checked = true;
-    } else {
-      html.classList.remove('dark');
-      themeToggle.checked = false;
+    const themeToggleCheckbox = document.getElementById('theme-toggle-checkbox');
+    const htmlElement = document.documentElement;
+
+    function applyTheme(theme) {
+      htmlElement.classList.toggle('dark', theme === 'dark');
+      themeToggleCheckbox.checked = theme === 'dark';
+      localStorage.setItem('phanna-portfolio-theme', theme);
+    }
+
+    // Check for saved theme or prefer-color-scheme
+    const savedTheme = localStorage.getItem('phanna-portfolio-theme') || 
+                       (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    applyTheme(savedTheme);
+
+    // Listen for theme toggle changes
+    themeToggleCheckbox.addEventListener('change', () => {
+      const newTheme = themeToggleCheckbox.checked ? 'dark' : 'light';
+      applyTheme(newTheme);
+    });
+
+    // Custom cursor functionality
+    const cursor = document.getElementById('cursor');
+    if (cursor) {
+      document.addEventListener('mousemove', e => {
+        cursor.style.left = `${e.clientX}px`;
+        cursor.style.top = `${e.clientY}px`;
+      });
+      
+      const hoverElements = document.querySelectorAll(
+        'a, button, .project-card, input, textarea, .theme-toggle, .modal-button, .learn-more-btn'
+      );
+      
+      hoverElements.forEach(el => {
+        el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+        el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+      });
+    }
+
+    // Mobile menu functionality
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuIcon = mobileMenuButton.querySelector('i');
+
+    function toggleMobileMenu() {
+      const isOpen = mobileMenu.classList.contains('translate-x-0');
+      mobileMenu.classList.toggle('translate-x-0', !isOpen);
+      mobileMenuButton.setAttribute('aria-expanded', String(!isOpen));
+      menuIcon.className = !isOpen ? 'fas fa-times' : 'fas fa-bars';
+      
+      // Toggle body scroll when menu is open
+      document.body.style.overflow = !isOpen ? 'hidden' : '';
+    }
+
+    if (mobileMenuButton && mobileMenu) {
+      mobileMenuButton.addEventListener('click', toggleMobileMenu);
     }
     
-    // Toggle theme on button click
-    themeToggle.addEventListener('change', () => {
-      if (themeToggle.checked) {
-        html.classList.add('dark');
-        localStorage.setItem('theme', 'dark');
-      } else {
-        html.classList.remove('dark');
-        localStorage.setItem('theme', 'light');
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', function(event) {
+      if (mobileMenu && mobileMenuButton && 
+          !mobileMenu.contains(event.target) && 
+          !mobileMenuButton.contains(event.target) && 
+          mobileMenu.classList.contains('translate-x-0')) {
+        toggleMobileMenu();
       }
     });
+
+    // Contact form handling (sends to Telegram)
+    const contactForm = document.getElementById('contact-form');
+    const formStatus = document.getElementById('form-status');
+
+    if (contactForm && formStatus) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const inquiryTopic = document.getElementById('inquiry-topic').value.trim();
+            const message = document.getElementById('message').value.trim();
+
+            if (!name || !email || !message) {
+                showFormStatus('Please fill in all required fields.', 'error');
+                return;
+            }
+
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                showFormStatus('Please enter a valid email address.', 'error');
+                return;
+            }
+
+            showFormStatus('Sending message...', 'info');
+
+            const telegramMessage = `📬 *New Message from Portfolio*\n\n` +
+                `*Name:* ${name}\n` +
+                `*Email:* ${email}\n` +
+                `*Inquiry Topic:* ${inquiryTopic || 'Not provided'}\n\n` +
+                `*Message:*\n${message}`;
+
+            // --- ⚠️ SECURITY WARNING ---
+            // Exposing your Bot Token and Chat ID in client-side JavaScript is a major security risk.
+            // Anyone can view this information and use your bot.
+            // In a real application, this functionality should be handled by a secure backend or a serverless function.
+            const botToken = "8098667668:AAEAqQE9DfZ0RNIVqbJKWy5gwGiKpQDNAq8";
+            const chatId = "6440170541";
+            const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+
+            fetch(url, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        chat_id: chatId,
+                        text: telegramMessage,
+                        parse_mode: "Markdown"
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.ok) {
+                        showFormStatus('✅ Message sent successfully! I will get back to you soon.', 'success');
+                        contactForm.reset();
+                    } else {
+                        console.error('Telegram API Error:', data);
+                        showFormStatus(`❌ Failed to send. Error: ${data.description || 'Unknown error'}`, 'error');
+                    }
+                })
+                .catch(error => {
+                    console.error('Fetch Error:', error);
+                    showFormStatus('❌ An unexpected network error occurred. Please try again.', 'error');
+                })
+                .finally(() => {
+                    setTimeout(() => {
+                        if (formStatus) formStatus.textContent = '';
+                    }, 5000);
+                });
+        });
+    }
+    
+    function showFormStatus(message, type = 'info') {
+      if (!formStatus) return;
+      
+      formStatus.textContent = message;
+      formStatus.className = 'mt-4 text-sm text-center';
+      
+      if (type === 'success') {
+        formStatus.classList.add('text-green-500');
+      } else if (type === 'error') {
+        formStatus.classList.add('text-red-500');
+      } else {
+        formStatus.style.color = 'var(--text-secondary)';
+      }
+    }
+
+    // Set current year in footer
+    const currentYearElement = document.getElementById('current-year');
+    if (currentYearElement) {
+      currentYearElement.textContent = new Date().getFullYear();
+    }
+
+    // Modal functionality
+    const aiModal = document.getElementById('ai-modal');
+    const modalTitleEl = document.getElementById('modal-title'); 
+    const modalBodyEl = document.getElementById('modal-body');   
+    const modalActionsEl = document.getElementById('modal-actions'); 
+
+    function showModal(title, bodyContent, actionsConfig = []) {
+      if (!aiModal || !modalTitleEl || !modalBodyEl || !modalActionsEl) return;
+      
+      modalTitleEl.textContent = title;
+      modalBodyEl.innerHTML = bodyContent; 
+      
+      modalActionsEl.innerHTML = '';
+      actionsConfig.forEach(action => {
+        const button = document.createElement('button');
+        button.textContent = action.text;
+        button.className = `modal-button ${action.type}`;
+        button.addEventListener('click', () => {
+          if(action.onClick) action.onClick();
+          closeModal();
+        });
+        modalActionsEl.appendChild(button);
+      });
+      
+      aiModal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        if (aiModal) {
+            aiModal.classList.remove('active');
+            // FIX: Only unlock scroll if the mobile menu is NOT open.
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (mobileMenu && !mobileMenu.classList.contains('translate-x-0')) {
+                document.body.style.overflow = '';
+            }
+        }
+    }
+
+
+    if(aiModal) {
+      aiModal.addEventListener('click', (event) => {
+        if (event.target === aiModal) {
+          closeModal();
+        }
+      });
+    }
+
+    // Project details data
+    const projectDetailsData = {
+      'portfolio': {
+        title: 'Portfolio Website',
+        details: `This is the very website you are currently viewing! It's designed to be a modern, interactive showcase of my skills and projects.
+        <br><br><strong>Key Features:</strong>
+        <ul class="list-disc pl-5 space-y-1">
+          <li>Responsive design for all devices</li>
+          <li>Smooth animations and transitions using AOS library</li>
+          <li>Light and Dark theme toggle with localStorage persistence</li>
+          <li>Interactive custom cursor</li>
+          <li>AI-powered bio enhancer and contact message suggester</li>
+        </ul>
+        <br><strong>Technologies:</strong> HTML, Tailwind CSS, JavaScript, Font Awesome, AOS.js`
+      },
+      'ui-system': {
+        title: 'UI Design System',
+        details: `This project involved creating a comprehensive UI Design System in Figma. The goal was to establish a consistent visual language and a library of reusable components for future projects.
+        <br><br><strong>Key Features:</strong>
+        <ul class="list-disc pl-5 space-y-1">
+          <li>Defined typography, color palettes, and spacing guidelines</li>
+          <li>Created a library of common UI components (buttons, inputs, cards, etc.)</li>
+          <li>Focused on accessibility and usability principles</li>
+          <li>Documented usage guidelines for designers and developers</li>
+        </ul>
+        <br><strong>Tools:</strong> Figma, Storybook (for component documentation)`
+      },
+      'animation': {
+        title: 'Interactive Animation',
+        details: `A fun project exploring the HTML Canvas API and JavaScript animation libraries like GSAP (GreenSock Animation Platform).
+        <br><br><strong>Key Features:</strong>
+        <ul class="list-disc pl-5 space-y-1">
+          <li>Created dynamic visual effects and character animations</li>
+          <li>Implemented user interaction to control or affect the animation</li>
+          <li>Explored physics-based movement and particle systems</li>
+          <li>Optimized performance for smooth animations</li>
+        </ul>
+        <br><strong>Technologies:</strong> JavaScript, HTML Canvas API, GSAP, WebGL (for advanced effects)`
+      },
+      'resume-analyzer': {
+        title: 'AI Resume Analyzer',
+        details: `An AI-powered tool designed to help job seekers and recruiters by automatically reviewing and scoring resumes against job descriptions.
+        <br><br><strong>Key Features:</strong>
+        <ul class="list-disc pl-5 space-y-1">
+          <li>Utilizes Natural Language Processing (NLP) with spaCy to parse and understand resume content</li>
+          <li>Employs machine learning techniques with scikit-learn for keyword extraction and relevance scoring</li>
+          <li>Provides a similarity score between the resume and the job description</li>
+          <li>Generates actionable feedback for improving resume content</li>
+          <li>Built with a user-friendly interface using Streamlit</li>
+        </ul>
+        <br><strong>Technologies:</strong> Python, spaCy, scikit-learn, Streamlit, NLTK`
+      },
+      'ecommerce': {
+        title: 'E-commerce Store',
+        details: `A fully responsive e-commerce platform with product filtering, cart functionality, and secure checkout.
+        <br><br><strong>Key Features:</strong>
+        <ul class="list-disc pl-5 space-y-1">
+          <li>Product catalog with filtering and search functionality</li>
+          <li>Shopping cart with persistent storage</li>
+          <li>User authentication and account management</li>
+          <li>Secure payment processing integration</li>
+          <li>Admin dashboard for product management</li>
+        </ul>
+        <br><strong>Technologies:</strong> React, Next.js, Node.js, MongoDB, Stripe API`
+      },
+      'weather-app': {
+        title: 'Weather Dashboard',
+        details: `A weather application with 5-day forecast, location search, and animated weather icons.
+        <br><br><strong>Key Features:</strong>
+        <ul class="list-disc pl-5 space-y-1">
+          <li>Current weather conditions with animated icons</li>
+          <li>5-day forecast with temperature charts</li>
+          <li>Location search with autocomplete</li>
+          <li>Responsive design for all devices</li>
+          <li>Offline functionality with service workers</li>
+        </ul>
+        <br><strong>Technologies:</strong> React, Weather API, Chart.js, Service Workers`
+      }
+    };
+
+    // Project details modal triggers
+    const projectDetailsButtons = document.querySelectorAll('.project-details-trigger');
+    
+    projectDetailsButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const projectCard = this.closest('.project-card');
+        const projectId = projectCard.dataset.projectId;
+        const projectData = projectDetailsData[projectId];
+        const projectTitleFromCard = projectCard.querySelector('.project-title-for-modal').textContent;
+        
+        if (projectData) {
+          showModal(
+            projectData.title || projectTitleFromCard, 
+            projectData.details, 
+            [{ text: "Close", type: "secondary" }]
+          );
+        } else {
+          showModal(
+            projectTitleFromCard, 
+            "Detailed information for this project is not yet available. Please check back later!",
+            [{ text: "Close", type: "secondary" }]
+          );
+        }
+      });
+    });
+
+    // AI Message Generator
+    const generateMessageButton = document.getElementById('generate-message-button');
+    const inquiryTopicInput = document.getElementById('inquiry-topic');
+    const messageTextarea = document.getElementById('message');
+    const messageLoader = document.getElementById('message-loader');
+
+    if (generateMessageButton && inquiryTopicInput && messageTextarea && messageLoader) {
+      generateMessageButton.addEventListener('click', async () => {
+        const topic = inquiryTopicInput.value.trim();
+        if (!topic) {
+          showModal("Input Needed", "Please enter a topic for your inquiry first.", [{ text: "OK", type: "primary" }]);
+          return;
+        }
+        
+        messageLoader.classList.remove('hidden');
+        generateMessageButton.disabled = true;
+        
+        try {
+          // In a real implementation, you would call your AI API here
+          // For demo purposes, we'll simulate a response after a delay
+          await new Promise(resolve => setTimeout(resolve, 1500));
+          
+          // Simulated AI response
+          const suggestedMessage = `Dear Phanna,\n\nI came across your portfolio and was impressed by your work, particularly your project on ${topic}. I'd love to discuss potential collaboration opportunities or learn more about your approach to it.\n\nCould we schedule a time to chat briefly? I'm available [your availability].\n\nLooking forward to your response!\n\nBest regards,\n[Your Name]`;
+          
+          messageTextarea.value = suggestedMessage;
+          showFormStatus('AI draft generated! Please review and personalize before sending.', 'success');
+        } catch (error) {
+          showModal("AI Feature Error", "Could not generate message draft. Please try again later or write your own message.", [{ text: "OK", type: "primary" }]);
+          showFormStatus(`Error: ${error.message}`, 'error');
+        } finally {
+          messageLoader.classList.add('hidden');
+          generateMessageButton.disabled = false;
+        }
+      });
+    }
+
+    // AI Bio Enhancer
+    const enhanceBioButton = document.getElementById('enhance-bio-button');
+    const bioContentDiv = document.getElementById('bio-content');
+    const bioLoader = document.getElementById('bio-loader');
+
+    if (enhanceBioButton && bioContentDiv && bioLoader) {
+      enhanceBioButton.addEventListener('click', async () => {
+        const currentBioParagraphs = bioContentDiv.querySelectorAll('p');
+        let currentBioText = "";
+        currentBioParagraphs.forEach(p => currentBioText += p.textContent.trim() + "\n\n");
+        currentBioText = currentBioText.trim();
+
+        if (!currentBioText) {
+          showModal("Error", "Could not find current bio text.", [{ text: "OK", type: "primary" }]);
+          return;
+        }
+
+        bioLoader.classList.remove('hidden');
+        enhanceBioButton.disabled = true;
+        
+        try {
+          // In a real implementation, you would call your AI API here
+          // For demo purposes, we'll simulate a response after a delay
+          await new Promise(resolve => setTimeout(resolve, 1500));
+          
+          // Simulated AI response
+          const enhancedBio = `Hello! I'm Phanna, a passionate 17-year-old creative developer dedicated to crafting immersive digital experiences that blend technical precision with artistic vision. My journey in web development began with simple curiosity and has evolved into a deep love for solving complex problems through elegant code.
+
+I specialize in creating responsive, interactive websites that not only function flawlessly but also delight users with thoughtful design and smooth animations. Constantly pushing boundaries, I stay at the forefront of emerging technologies and design trends to deliver cutting-edge solutions.
+
+What excites me most is the intersection of technology and creativity—where clean code meets beautiful design to create memorable user experiences. Whether it's building from scratch or optimizing existing projects, I approach every challenge with enthusiasm and attention to detail.`;
+          
+          const actions = [
+            { text: "Cancel", type: "secondary" },
+            { 
+              text: "Use this Bio", 
+              type: "primary", 
+              onClick: () => {
+                const paragraphs = enhancedBio.split(/\n\s*\n/).map(p => p.trim()).filter(p => p);
+                bioContentDiv.innerHTML = '';
+                paragraphs.forEach(paraText => {
+                  const pElement = document.createElement('p');
+                  pElement.className = 'text-[var(--text-secondary)] leading-relaxed mb-6';
+                  pElement.textContent = paraText;
+                  bioContentDiv.appendChild(pElement);
+                });
+                showFormStatus("Bio updated successfully!", "success");
+              }
+            }
+          ];
+          
+          showModal("✨ AI Enhanced Bio Suggestion", enhancedBio.replace(/\n/g, '<br>'), actions);
+        } catch (error) {
+          showModal("AI Feature Error", "Could not enhance bio. Please try again later.", [{ text: "OK", type: "primary" }]);
+        } finally {
+          bioLoader.classList.add('hidden');
+          enhanceBioButton.disabled = false;
+        }
+      });
+    }
   </script>
 </body>
 </html>
